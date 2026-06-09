@@ -1,7 +1,7 @@
 # Template file for 'niri-tearing'
 pkgname=niri-tearing
 version=26.04
-revision=1
+revision=2
 build_style=cargo
 build_helper="qemu"
 configure_args="--no-default-features --features dbus,xdp-gnome-screencast"
@@ -11,13 +11,13 @@ makedepends="eudev-libudev-devel libxkbcommon-devel libinput-devel libgbm-devel
 gdk-pixbuf-devel graphene-devel gtk4-devel libadwaita-devel"
 depends="wayland"
 checkdepends="wayland"
-short_desc="Scrollable-tiling Wayland compositor"
-maintainer="Andrew J. Hesford <ajh@sideband.org>"
+short_desc="Scrollable-tearing Wayland compositor, niri fork"
+maintainer="emi <none@none>"
 license="GPL-3.0-or-later"
 homepage="https://niri-wm.github.io/niri/"
-changelog="https://github.com/niri-wm/niri/releases"
-distfiles="https://github.com/urayde/niri/archive/43ce1227313161d282b706e1ec8ee1e9b8575f8b.zip"
-checksum=765145e268466922ce4c21bf5aec02b5e251500387c81105a3521459f2828b30
+# changelog="https://github.com/niri-wm/niri/releases"
+distfiles="https://github.com/urayde/niri/archive/b115b3172f290fcd1c00c5eab50c105af3dd95a9.zip"
+checksum=150e4915d81d5f524e55179f44cd01e24ebfeedc69cbf6981b1850320d848ca6
 conflics="niri>=0"
 provides="niri-${version}_1"
 replaces="niri>=0"
