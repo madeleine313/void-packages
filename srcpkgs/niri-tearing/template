@@ -1,0 +1,51 @@
+# Template file for 'niri-tearing'
+pkgname=niri-tearing
+version=26.04
+revision=1
+build_style=cargo
+build_helper="qemu"
+configure_args="--no-default-features --features dbus,xdp-gnome-screencast"
+hostmakedepends="pkg-config clang19-devel"
+makedepends="eudev-libudev-devel libxkbcommon-devel libinput-devel libgbm-devel
+ libdisplay-info-devel pipewire-devel pango-devel libseat-devel clang19-devel
+gdk-pixbuf-devel graphene-devel gtk4-devel libadwaita-devel"
+depends="wayland"
+checkdepends="wayland"
+short_desc="Scrollable-tiling Wayland compositor"
+maintainer="Andrew J. Hesford <ajh@sideband.org>"
+license="GPL-3.0-or-later"
+homepage="https://niri-wm.github.io/niri/"
+changelog="https://github.com/niri-wm/niri/releases"
+distfiles="https://github.com/urayde/niri/archive/43ce1227313161d282b706e1ec8ee1e9b8575f8b.zip"
+checksum=765145e268466922ce4c21bf5aec02b5e251500387c81105a3521459f2828b30
+conflics="niri>=0"
+provides="niri-${version}_1"
+replaces="niri>=0"
+
+pre_check() {
+	export XDG_RUNTIME_DIR=$(mktemp -d "$wrksrc/runtime.XXXXXX")
+	ulimit -n 4096
+}
+
+do_check() {
+	# skip tests on musl - tests try to use libc::close_range, but only actually used with certain features
+	# https://github.com/YaLTeR/niri/issues/1954
+	# skip egl tests - requires surfaceless EGL to be available at test time
+	if [ "$XBPS_TARGET_LIBC" != "musl" ]; then
+		cargo test --target ${RUST_TARGET} --workspace --locked -- --skip=::egl
+	fi
+}
+
+post_install() {
+	local sh
+
+	vinstall resources/niri.desktop 644 usr/share/wayland-sessions
+	vinstall resources/niri-portals.conf 644 usr/share/xdg-desktop-portal
+
+	vsconf resources/default-config.kdl
+
+	for sh in bash fish zsh; do
+		vtargetrun "${DESTDIR}/usr/bin/niri" completions "${sh}" > "niri.${sh}"
+		vcompletion "niri.${sh}" "${sh}"
+	done
+}
