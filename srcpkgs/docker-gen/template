@@ -1,6 +1,6 @@
 # Template file for 'docker-gen'
 pkgname=docker-gen
-version=0.16.4
+version=0.17.2
 revision=1
 build_style=go
 go_import_path="github.com/nginx-proxy/docker-gen"
@@ -10,7 +10,7 @@ maintainer="Andrea Brancaleoni <abc@pompel.me>"
 license="MIT"
 homepage="https://github.com/nginx-proxy/docker-gen"
 distfiles="https://github.com/nginx-proxy/docker-gen/archive/refs/tags/${version}.tar.gz"
-checksum=4c2c730f88b46a2543368f767ad12498959d64fd9e144c50872f53631b449687
+checksum=dfea32f45e8b3f0c61f93927375d538de6bb94c2089b0fb4adbbbce3289df378
 
 post_install() {
 	vlicense LICENSE
