@@ -1,0 +1,42 @@
+In upstream main, v255-stable, v257-stable.
+Source:
+https://github.com/elogind/elogind/commit/e7c9887df90156eae865dee345f393c10a5ae26d
+
+Fixes some cases of segfaults during poweroff and reboot keeping the machines stuck.
+
+--- a/src/login/logind-dbus.c	2025-11-11 08:08:10.000000000 +0100
++++ b/src/login/logind-dbus.c	2026-07-13 14:15:38.850238577 +0200
+@@ -1781,6 +1781,9 @@
+          */
+         m->sleep_fork_action = a; /* Remember this for the SIGCHLD handler */
+         m->action_job = strdup( handle_action_to_string( a->handle ) );
++        if (!m->action_job)
++                return log_oom();
++
+         forker = strjoina( "e-", m->action_job );
+         t = safe_fork( forker,
+                        FORK_LOG|FORK_REOPEN_LOG|FORK_DEATHSIG|FORK_CLOSE_ALL_FDS,
+@@ -1788,7 +1791,13 @@
+ 
+         if ( t ) {
+                 log_debug_elogind( "Forking off '%s' returned %d and set PID %d", forker, t, m->sleep_fork_pid );
+-                return t < 0 ? log_error_errno( t, "Failed to fork %s: %m", forker ) : t;
++                if (t < 0) {
++                        m->sleep_fork_action = NULL;
++                        m->action_job = mfree(m->action_job);
++                        return log_error_errno( t, "Failed to fork %s: %m", forker );
++                }
++
++                return t;
+         }
+ 
+         /* This is the forked out child */
+@@ -1805,7 +1814,7 @@
+ 
+         log_debug_elogind("Exiting from %s", program_invocation_short_name);
+ 
+-        log_info("Operation '%s' finished.", handle_action_to_string(m->delayed_action->handle));
++        log_info("Operation '%s' finished.", handle_action_to_string(a->handle));
+ 
+         m->action_job = mfree(m->action_job);
+         m->delayed_action = NULL;
