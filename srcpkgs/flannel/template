@@ -1,6 +1,6 @@
 # Template file for 'flannel'
 pkgname=flannel
-version=0.28.7
+version=0.28.9
 revision=1
 build_style=go
 go_mod_mode=off
@@ -11,7 +11,7 @@ maintainer="Andrea Brancaleoni <abc@pompel.me>"
 license="Apache-2.0"
 homepage="https://github.com/flannel-io/flannel"
 distfiles="https://github.com/flannel-io/flannel/archive/v${version}.tar.gz"
-checksum=9f67131b8072fe261acf792359e6938f93472f7818311dedf0701d4686ea8bd2
+checksum=4cbdd8e1d4b8cca02090340d50470215d520aa64cc2eccea58865add3860bc43
 
 post_install() {
 	vsv flannel

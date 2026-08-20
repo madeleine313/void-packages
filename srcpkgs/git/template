@@ -48,8 +48,8 @@ do_configure() {
 	NEEDS_LIBRT =
 	# https://lore.kernel.org/git/xmqqr02wbtdn.fsf@gitster.g/
 	CSPRNG_METHOD = getrandom
-	CARGO_ARGS = --release
-	RUST_TARGET_DIR = target/release
+	CARGO_ARGS = --release --target ${RUST_TARGET}
+	RUST_TARGET_DIR = target/${RUST_TARGET}/release
 	EOF
 
 	if [ "$XBPS_TARGET_LIBC" = musl ]; then
@@ -58,8 +58,6 @@ do_configure() {
 		NO_REGEX = Yes
 		EOF
 	fi
-	mkdir -p "target"
-	ln -sf . "target/$RUST_TARGET"
 }
 
 do_build() {

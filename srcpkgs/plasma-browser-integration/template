@@ -1,6 +1,7 @@
 # Template file for 'plasma-browser-integration'
+# group=kde-plasma
 pkgname=plasma-browser-integration
-version=6.6.3
+version=6.7.4
 revision=1
 build_style=cmake
 configure_args="-DBUILD_TESTING=OFF
@@ -23,4 +24,8 @@ maintainer="John <me@johnnynator.dev>"
 license="GPL-3.0-or-later"
 homepage="https://invent.kde.org/plasma/plasma-browser-integration"
 distfiles="${KDE_SITE}/plasma/${version}/${pkgname}-${version}.tar.xz"
-checksum=14dfc993fd7dcd77e41f82d386d2a6033e588ee9ceffe01ce32a7a13f53720e4
+checksum=298ee5e14c935dd811ad3686a2a6422fe8d2ea7f0b6946595268c6ac6b252325
+
+# stage builds
+makedepends+=" kde-plasma-base"
+shlib_requires="KDE_Plasma.${version}"
