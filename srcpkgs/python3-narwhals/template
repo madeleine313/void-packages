@@ -1,6 +1,6 @@
 # Template file for 'python3-narwhals'
 pkgname=python3-narwhals
-version=2.25.0
+version=2.27.0
 revision=1
 build_style=python3-pep517
 hostmakedepends="uv-build"
@@ -10,7 +10,7 @@ maintainer="Andrew J. Hesford <ajh@sideband.org>"
 license="MIT"
 homepage="https://narwhals-dev.github.io/narwhals/"
 distfiles="${PYPI_SITE}/n/narwhals/narwhals-${version}.tar.gz"
-checksum=62c036c810662bf7820b7737077176313bc59350eeeefb808510f388c743e4b2
+checksum=27a1b68b94c36bbe60ecc63fb9b37674a85a98bee3f45d179cbdc0a872bc9b8d
 make_check=no # archive includes no tests
 
 post_install() {

@@ -1,6 +1,6 @@
 # Template file for 'github-cli'
 pkgname=github-cli
-version=2.100.0
+version=2.102.0
 revision=1
 build_style=go
 build_helper=qemu
@@ -14,7 +14,7 @@ license="MIT"
 homepage="https://cli.github.com"
 changelog="https://github.com/cli/cli/releases"
 distfiles="https://github.com/cli/cli/archive/refs/tags/v${version}.tar.gz"
-checksum=39d5123f08a553a6fa69e46de86c22d04d97a217e03d0e6584b66d0fea50f1fe
+checksum=08bf0ef8b4409893889175e0f5279d30d6edd96465816042c0d7c72eac598158
 
 pre_build() {
 	local _date
